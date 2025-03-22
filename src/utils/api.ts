@@ -3,11 +3,7 @@ import { PriceData, CalculationResult } from '@/components/PriceCalculator';
 // This function will call the Python API to get the calculation result
 export const calculatePrice = async (data: PriceData): Promise<CalculationResult> => {
   try {
-<<<<<<< HEAD
     // Always use the real Python API implementation
-=======
-    
->>>>>>> aa3693a (messag2e)
     return await callPythonApi(data);
   } catch (error) {
     console.error('Failed to call Python API:', error);
