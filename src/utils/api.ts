@@ -31,7 +31,7 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
     if (!response.ok) {
       throw new Error('API call failed with status: ' + response.status);
     }
-    console.log(response)
+    
     
     return await response.json();
   } catch (error) {
