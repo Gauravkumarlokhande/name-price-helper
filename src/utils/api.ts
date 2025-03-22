@@ -1,17 +1,9 @@
-
 import { PriceData, CalculationResult } from '@/components/PriceCalculator';
 
 // This function will call the Python API to get the calculation result
 export const calculatePrice = async (data: PriceData): Promise<CalculationResult> => {
   try {
-    // In development, use the mock implementation 
-    // due to CORS limitations with external APIs
-    if (import.meta.env.DEV) {
-      console.log('Using mock implementation in development mode');
-      return await mockCalculatePrice(data);
-    }
-    
-    // In production, call the actual Python API endpoint
+    // Always use the real Python API implementation
     return await callPythonApi(data);
   } catch (error) {
     console.error('Failed to call Python API:', error);
@@ -25,17 +17,16 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
   const apiUrl = 'https://name-price-api.vercel.app/items/';
   
   try {
-    // For production: API should implement CORS or use server-side proxy
+    // Using direct API call with proper CORS headers
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        
       },
       body: JSON.stringify(data),
-      
     });
-    console.log(response)
+    
+    console.log('API Response:', response);
     
     if (!response.ok) {
       throw new Error(`API call failed with status: ${response.status} - ${response.statusText}`);
@@ -48,7 +39,7 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
   }
 };
 
-// For development/testing without the Python API
+// Keep the mock function for reference, but it's not used anymore
 export const mockCalculatePrice = async (data: PriceData): Promise<CalculationResult> => {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 800));

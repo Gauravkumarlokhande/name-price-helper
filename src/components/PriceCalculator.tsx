@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -51,24 +50,14 @@ const PriceCalculator = ({ onResultReceived }: PriceCalculatorProps) => {
     setLoading(true);
     
     try {
-      // Use the calculatePrice function which will automatically
-      // determine whether to use the mock or real API based on environment
       const result = await calculatePrice(formData);
       
       onResultReceived(result);
       
-      // Use different toast messages for production vs development
-      if (import.meta.env.DEV) {
-        toast({
-          title: "Development Mode",
-          description: "Using mock data. Connect to Python API in production.",
-        });
-      } else {
-        toast({
-          title: "Data sent to Python API",
-          description: "Your price data has been processed by the API.",
-        });
-      }
+      toast({
+        title: "Calculation Complete",
+        description: "Your price data has been processed by the Python API.",
+      });
     } catch (error) {
       toast({
         title: "API Error",
