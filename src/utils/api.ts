@@ -39,25 +39,4 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
   }
 };
 
-<<<<<<< HEAD
-// Keep the mock function for reference, but it's not used anymore
-export const mockCalculatePrice = async (data: PriceData): Promise<CalculationResult> => {
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 800));
-  
-  // Calculate a simulated tax amount and total for development/testing
-  const taxAmount = data.price * (data.taxRate / 100);
-  const total = data.price + taxAmount;
-  
-  // This is just a mock response for development/testing
-  // The actual calculation will be done by the Python API
-  return {
-    subtotal: data.price,
-    taxAmount: taxAmount,
-    total: total,
-    formattedTotal: `$${total.toFixed(2)}`,
-  };
-};
-=======
 
->>>>>>> aa3693a (messag2e)
