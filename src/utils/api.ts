@@ -33,8 +33,9 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
         
       },
       body: JSON.stringify(data),
-      mode: 'cors'
+      
     });
+    console.log(response)
     
     if (!response.ok) {
       throw new Error(`API call failed with status: ${response.status} - ${response.statusText}`);
