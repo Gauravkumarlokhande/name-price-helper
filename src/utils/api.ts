@@ -33,6 +33,7 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
         
       },
       body: JSON.stringify(data),
+      mode: 'cors'
     });
     
     if (!response.ok) {
