@@ -30,7 +30,7 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Origin': window.location.origin,
+        
       },
       body: JSON.stringify(data),
     });
