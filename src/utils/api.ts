@@ -15,7 +15,7 @@ export const calculatePrice = async (data: PriceData): Promise<CalculationResult
 // Implementation of the actual Python API call
 export const callPythonApi = async (data: PriceData): Promise<CalculationResult> => {
   // Replace with your actual Python API endpoint
-  const apiUrl = 'https://name-price-api.vercel.app/';
+  const apiUrl = 'https://name-price-api.vercel.app/items/';
   
   try {
     const response = await fetch(apiUrl, {
