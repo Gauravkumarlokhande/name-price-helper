@@ -3,7 +3,11 @@ import { PriceData, CalculationResult } from '@/components/PriceCalculator';
 // This function will call the Python API to get the calculation result
 export const calculatePrice = async (data: PriceData): Promise<CalculationResult> => {
   try {
+<<<<<<< HEAD
     // Always use the real Python API implementation
+=======
+    
+>>>>>>> aa3693a (messag2e)
     return await callPythonApi(data);
   } catch (error) {
     console.error('Failed to call Python API:', error);
@@ -39,6 +43,7 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
   }
 };
 
+<<<<<<< HEAD
 // Keep the mock function for reference, but it's not used anymore
 export const mockCalculatePrice = async (data: PriceData): Promise<CalculationResult> => {
   // Simulate network delay
@@ -57,3 +62,6 @@ export const mockCalculatePrice = async (data: PriceData): Promise<CalculationRe
     formattedTotal: `$${total.toFixed(2)}`,
   };
 };
+=======
+
+>>>>>>> aa3693a (messag2e)

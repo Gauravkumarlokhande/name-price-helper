@@ -54,10 +54,14 @@ const PriceCalculator = ({ onResultReceived }: PriceCalculatorProps) => {
       
       onResultReceived(result);
       
+<<<<<<< HEAD
       toast({
         title: "Calculation Complete",
         description: "Your price data has been processed by the Python API.",
       });
+=======
+      
+>>>>>>> aa3693a (messag2e)
     } catch (error) {
       toast({
         title: "API Error",
