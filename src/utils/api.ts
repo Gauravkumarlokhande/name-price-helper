@@ -17,21 +17,22 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
   // Replace with your actual Python API endpoint
   const apiUrl = 'https://name-price-api.vercel.app/items/';
   
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const url = proxyUrl + apiUrl;
   
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Origin': window.location.origin,
       },
-      
       body: JSON.stringify(data),
     });
     
     if (!response.ok) {
       throw new Error('API call failed with status: ' + response.status);
     }
-    
     
     return await response.json();
   } catch (error) {
