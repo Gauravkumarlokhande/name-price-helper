@@ -52,10 +52,10 @@ const PriceCalculator = ({ onResultReceived }: PriceCalculatorProps) => {
     
     try {
       // In production, use the real API call
-      // const result = await calculatePrice(formData);
+      const result = await calculatePrice(formData);
       
       // For development/testing without the Python API
-      const result = await mockCalculatePrice(formData);
+      // const result = await mockCalculatePrice(formData);
       
       onResultReceived(result);
       toast({
