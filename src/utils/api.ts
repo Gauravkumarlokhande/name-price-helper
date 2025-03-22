@@ -1,35 +1,20 @@
 
 import { PriceData, CalculationResult } from '@/components/PriceCalculator';
 
-// This is a mock API function that simulates calling a Python backend
-// In a real application, this would make an actual API call
+// This function will call the Python API to get the calculation result
 export const calculatePrice = async (data: PriceData): Promise<CalculationResult> => {
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 800));
-  
-  // Simulated calculation (would be done by Python backend)
-  const subtotal = data.price;
-  const taxAmount = (data.price * data.taxRate) / 100;
-  const total = subtotal + taxAmount;
-  
-  // Format currency for display
-  const formattedTotal = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(total);
-  
-  // This would be the response from the Python API
-  return {
-    subtotal,
-    taxAmount,
-    total,
-    formattedTotal,
-  };
+  try {
+    // Call the actual Python API endpoint
+    return await callPythonApi(data);
+  } catch (error) {
+    console.error('Failed to call Python API:', error);
+    throw error;
+  }
 };
 
-// In a real app, this would be implemented to call your Python API
+// Implementation of the actual Python API call
 export const callPythonApi = async (data: PriceData): Promise<CalculationResult> => {
-  // Replace with your actual API endpoint
+  // Replace with your actual Python API endpoint
   const apiUrl = 'https://your-python-api-url.com/calculate';
   
   try {
@@ -42,7 +27,7 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
     });
     
     if (!response.ok) {
-      throw new Error('API call failed');
+      throw new Error('API call failed with status: ' + response.status);
     }
     
     return await response.json();
@@ -50,4 +35,19 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
     console.error('API call error:', error);
     throw error;
   }
+};
+
+// For development/testing without the Python API
+export const mockCalculatePrice = async (data: PriceData): Promise<CalculationResult> => {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 800));
+  
+  // This is just a mock response for development/testing
+  // The actual calculation will be done by the Python API
+  return {
+    subtotal: data.price,
+    taxAmount: 0, // This will come from the Python API
+    total: 0,     // This will come from the Python API
+    formattedTotal: '$0.00', // This will come from the Python API
+  };
 };

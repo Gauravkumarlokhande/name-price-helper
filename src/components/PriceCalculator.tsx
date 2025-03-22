@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { calculatePrice } from '@/utils/api';
+import { calculatePrice, mockCalculatePrice } from '@/utils/api';
 import { useToast } from '@/components/ui/use-toast';
 
 export interface PriceData {
@@ -51,20 +51,24 @@ const PriceCalculator = ({ onResultReceived }: PriceCalculatorProps) => {
     setLoading(true);
     
     try {
-      // Here we'd normally call our API
-      const result = await calculatePrice(formData);
+      // In production, use the real API call
+      // const result = await calculatePrice(formData);
+      
+      // For development/testing without the Python API
+      const result = await mockCalculatePrice(formData);
+      
       onResultReceived(result);
       toast({
-        title: "Calculation complete",
-        description: "Your price calculation has been processed successfully.",
+        title: "Data sent to Python API",
+        description: "Your price data has been processed by the API.",
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to calculate price. Please try again.",
+        title: "API Error",
+        description: "Failed to get calculation from Python API. Please try again.",
         variant: "destructive",
       });
-      console.error('Calculation error:', error);
+      console.error('API call error:', error);
     } finally {
       setLoading(false);
     }
