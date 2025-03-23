@@ -21,12 +21,13 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
     // Log the request data for debugging
     console.log('Sending API request with data:', JSON.stringify(data));
     
-    // Ensure data values are of the correct type
+    // Format data to match the API's expected format
+    // The backend expects "tax" instead of "taxRate"
     const formattedData = {
       name: String(data.name),
       description: String(data.description),
       price: Number(data.price),
-      taxRate: Number(data.taxRate)
+      tax: Number(data.taxRate) // Rename taxRate to tax to match the API expectation
     };
     
     // Using direct API call with proper CORS headers
