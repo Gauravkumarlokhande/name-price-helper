@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -6,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { calculatePrice } from '@/utils/api';
 import { useToast } from '@/components/ui/use-toast';
-
 
 export interface PriceData {
   name: string;
@@ -46,18 +46,68 @@ const PriceCalculator = ({ onResultReceived }: PriceCalculatorProps) => {
     }));
   };
 
+  const validateForm = (): boolean => {
+    // Ensure name is not empty
+    if (!formData.name.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Product name is required",
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    // Ensure price is a positive number
+    if (isNaN(formData.price) || formData.price <= 0) {
+      toast({
+        title: "Validation Error",
+        description: "Price must be a positive number",
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    // Ensure tax rate is a non-negative number
+    if (isNaN(formData.taxRate) || formData.taxRate < 0) {
+      toast({
+        title: "Validation Error",
+        description: "Tax rate must be a non-negative number",
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form inputs before submission
+    if (!validateForm()) {
+      return;
+    }
+    
     setLoading(true);
     
     try {
-      const result = await calculatePrice(formData);
+      // Ensure we're sending properly formatted data
+      const dataToSend: PriceData = {
+        name: formData.name.trim(),
+        description: formData.description.trim(),
+        price: Number(formData.price),
+        taxRate: Number(formData.taxRate)
+      };
+      
+      console.log('Submitting data:', dataToSend);
+      
+      const result = await calculatePrice(dataToSend);
       
       onResultReceived(result);
       
       toast({
         title: "Calculation Complete",
-        description: "Your price data has been processed by the Python API.",
+        description: "Your price data has been processed successfully.",
       });
     } catch (error) {
       toast({
