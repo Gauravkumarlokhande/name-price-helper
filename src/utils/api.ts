@@ -14,8 +14,8 @@ export const calculatePrice = async (data: PriceData): Promise<CalculationResult
 
 // Implementation of the actual Python API call
 export const callPythonApi = async (data: PriceData): Promise<CalculationResult> => {
-  // Replace with your actual Python API endpoint
-  const apiUrl = 'https://127.0.0.1:8000/items/';
+  // Replace with your actual Python API endpoint - using HTTP instead of HTTPS for local development
+  const apiUrl = 'http://127.0.0.1:8000/items/';
   
   try {
     // Log the request data for debugging
