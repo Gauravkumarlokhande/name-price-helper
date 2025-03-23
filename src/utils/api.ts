@@ -56,7 +56,18 @@ export const callPythonApi = async (data: PriceData): Promise<CalculationResult>
     const responseData = await response.json();
     console.log('API Response data:', responseData);
     
-    return responseData;
+    // Transform the API response into the format expected by the ResultDisplay component
+    // The API returns {total_price: number} but our component expects {subtotal, taxAmount, total, formattedTotal}
+    const subtotal = Number(data.price);
+    const taxAmount = subtotal * (Number(data.taxRate) / 100);
+    const total = responseData.total_price || subtotal + taxAmount; // Use API total if available, fallback to calculated
+    
+    return {
+      subtotal: subtotal,
+      taxAmount: taxAmount,
+      total: total,
+      formattedTotal: `$${total.toFixed(2)}`
+    };
   } catch (error) {
     console.error('API call error:', error);
     throw error;
